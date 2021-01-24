@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Provider="Npgsql" ProviderManifestToken="12.3" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="personal_computer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_software" Type="int4" Nullable="false" />
+          <Property Name="keyboard" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="computer_mouse" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="monitor" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="session">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_visitors" Type="int4" Nullable="false" />
+          <Property Name="id_personal_computer" Type="int4" Nullable="false" />
+          <Property Name="id_services" Type="int4" Nullable="false" />
+          <Property Name="id_admin" Type="int4" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="start_time" Type="time" Precision="6" Nullable="false" />
+          <Property Name="end_time" Type="time" Precision="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="software">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="os" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="programs" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="visitors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="date_of_birth" Type="date" Nullable="false" />
+          <Property Name="phone_number" Type="int8" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_personal_computer_software">
+          <End Role="software" Type="Self.software" Multiplicity="1" />
+          <End Role="personal_computer" Type="Self.personal_computer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="software">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="personal_computer">
+              <PropertyRef Name="id_software" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_admin">
+          <End Role="admin" Type="Self.admin" Multiplicity="1" />
+          <End Role="session" Type="Self.session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="admin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_admin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_personal_computer">
+          <End Role="personal_computer" Type="Self.personal_computer" Multiplicity="1" />
+          <End Role="session" Type="Self.session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personal_computer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_personal_computer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_services">
+          <End Role="services" Type="Self.services" Multiplicity="1" />
+          <End Role="session" Type="Self.session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_services" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_visitors">
+          <End Role="visitors" Type="Self.visitors" Multiplicity="1" />
+          <End Role="session" Type="Self.session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="visitors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_visitors" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Model1StoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="public" store:Type="Tables" />
+          <EntitySet Name="personal_computer" EntityType="Self.personal_computer" Schema="public" store:Type="Tables" />
+          <EntitySet Name="services" EntityType="Self.services" Schema="public" store:Type="Tables" />
+          <EntitySet Name="session" EntityType="Self.session" Schema="public" store:Type="Tables" />
+          <EntitySet Name="software" EntityType="Self.software" Schema="public" store:Type="Tables" />
+          <EntitySet Name="visitors" EntityType="Self.visitors" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="fk_personal_computer_software" Association="Self.fk_personal_computer_software">
+            <End Role="software" EntitySet="software" />
+            <End Role="personal_computer" EntitySet="personal_computer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_admin" Association="Self.fk_session_admin">
+            <End Role="admin" EntitySet="admin" />
+            <End Role="session" EntitySet="session" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_personal_computer" Association="Self.fk_session_personal_computer">
+            <End Role="personal_computer" EntitySet="personal_computer" />
+            <End Role="session" EntitySet="session" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_services" Association="Self.fk_session_services">
+            <End Role="services" EntitySet="services" />
+            <End Role="session" EntitySet="session" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_visitors" Association="Self.fk_session_visitors">
+            <End Role="visitors" EntitySet="visitors" />
+            <End Role="session" EntitySet="session" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="Model1.admin" />
+          <EntitySet Name="personal_computer" EntityType="Model1.personal_computer" />
+          <EntitySet Name="services" EntityType="Model1.service" />
+          <EntitySet Name="sessions" EntityType="Model1.session" />
+          <EntitySet Name="softwares" EntityType="Model1.software" />
+          <EntitySet Name="visitors" EntityType="Model1.visitor" />
+          <AssociationSet Name="fk_session_admin" Association="Model1.fk_session_admin">
+            <End Role="admin" EntitySet="admins" />
+            <End Role="session" EntitySet="sessions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_personal_computer_software" Association="Model1.fk_personal_computer_software">
+            <End Role="software" EntitySet="softwares" />
+            <End Role="personal_computer" EntitySet="personal_computer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_personal_computer" Association="Model1.fk_session_personal_computer">
+            <End Role="personal_computer" EntitySet="personal_computer" />
+            <End Role="session" EntitySet="sessions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_services" Association="Model1.fk_session_services">
+            <End Role="service" EntitySet="services" />
+            <End Role="session" EntitySet="sessions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_session_visitors" Association="Model1.fk_session_visitors">
+            <End Role="visitor" EntitySet="visitors" />
+            <End Role="session" EntitySet="sessions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="sessions" Relationship="Model1.fk_session_admin" FromRole="admin" ToRole="session" />
+        </EntityType>
+        <EntityType Name="personal_computer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_software" Type="Int32" Nullable="false" />
+          <Property Name="keyboard" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="computer_mouse" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="monitor" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="software" Relationship="Model1.fk_personal_computer_software" FromRole="personal_computer" ToRole="software" />
+          <NavigationProperty Name="sessions" Relationship="Model1.fk_session_personal_computer" FromRole="personal_computer" ToRole="session" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="sessions" Relationship="Model1.fk_session_services" FromRole="service" ToRole="session" />
+        </EntityType>
+        <EntityType Name="session">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_visitors" Type="Int32" Nullable="false" />
+          <Property Name="id_personal_computer" Type="Int32" Nullable="false" />
+          <Property Name="id_services" Type="Int32" Nullable="false" />
+          <Property Name="id_admin" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="start_time" Type="Time" Nullable="false" Precision="6" />
+          <Property Name="end_time" Type="Time" Nullable="false" Precision="6" />
+          <NavigationProperty Name="admin" Relationship="Model1.fk_session_admin" FromRole="session" ToRole="admin" />
+          <NavigationProperty Name="personal_computer" Relationship="Model1.fk_session_personal_computer" FromRole="session" ToRole="personal_computer" />
+          <NavigationProperty Name="service" Relationship="Model1.fk_session_services" FromRole="session" ToRole="service" />
+          <NavigationProperty Name="visitor" Relationship="Model1.fk_session_visitors" FromRole="session" ToRole="visitor" />
+        </EntityType>
+        <EntityType Name="software">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="os" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="programs" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="personal_computer" Relationship="Model1.fk_personal_computer_software" FromRole="software" ToRole="personal_computer" />
+        </EntityType>
+        <EntityType Name="visitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="phone_number" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="sessions" Relationship="Model1.fk_session_visitors" FromRole="visitor" ToRole="session" />
+        </EntityType>
+        <Association Name="fk_session_admin">
+          <End Type="Model1.admin" Role="admin" Multiplicity="1" />
+          <End Type="Model1.session" Role="session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="admin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_admin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_personal_computer_software">
+          <End Type="Model1.software" Role="software" Multiplicity="1" />
+          <End Type="Model1.personal_computer" Role="personal_computer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="software">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="personal_computer">
+              <PropertyRef Name="id_software" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_personal_computer">
+          <End Type="Model1.personal_computer" Role="personal_computer" Multiplicity="1" />
+          <End Type="Model1.session" Role="session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personal_computer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_personal_computer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_services">
+          <End Type="Model1.service" Role="service" Multiplicity="1" />
+          <End Type="Model1.session" Role="session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_services" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_session_visitors">
+          <End Type="Model1.visitor" Role="visitor" Multiplicity="1" />
+          <End Type="Model1.session" Role="session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="visitor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="session">
+              <PropertyRef Name="id_visitors" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Model1" />
+        <Alias Key="Target" Value="Model1.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model1Container" StorageEntityContainer="Model1StoreContainer">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="Model1.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personal_computer">
+            <EntityTypeMapping TypeName="Model1.personal_computer">
+              <MappingFragment StoreEntitySet="personal_computer">
+                <ScalarProperty Name="monitor" ColumnName="monitor" />
+                <ScalarProperty Name="computer_mouse" ColumnName="computer_mouse" />
+                <ScalarProperty Name="keyboard" ColumnName="keyboard" />
+                <ScalarProperty Name="id_software" ColumnName="id_software" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="services">
+            <EntityTypeMapping TypeName="Model1.service">
+              <MappingFragment StoreEntitySet="services">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sessions">
+            <EntityTypeMapping TypeName="Model1.session">
+              <MappingFragment StoreEntitySet="session">
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id_admin" ColumnName="id_admin" />
+                <ScalarProperty Name="id_services" ColumnName="id_services" />
+                <ScalarProperty Name="id_personal_computer" ColumnName="id_personal_computer" />
+                <ScalarProperty Name="id_visitors" ColumnName="id_visitors" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="softwares">
+            <EntityTypeMapping TypeName="Model1.software">
+              <MappingFragment StoreEntitySet="software">
+                <ScalarProperty Name="programs" ColumnName="programs" />
+                <ScalarProperty Name="os" ColumnName="os" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="visitors">
+            <EntityTypeMapping TypeName="Model1.visitor">
+              <MappingFragment StoreEntitySet="visitors">
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

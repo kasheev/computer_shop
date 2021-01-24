@@ -1,0 +1,33 @@
+﻿@model BasaDate.Models.service
+
+@{
+    ViewBag.Title = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Услуги</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <p>Название</p>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            <p>Описание</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("admin")) {@Html.ActionLink("Изменить", "Edit", new { id = Model.id })} |
+    @Html.ActionLink("Назад", "Index")
+</p>

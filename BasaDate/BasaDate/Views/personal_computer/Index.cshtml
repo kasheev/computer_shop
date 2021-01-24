@@ -1,0 +1,70 @@
+﻿@model IEnumerable<BasaDate.Models.personal_computer>
+
+@{
+    ViewBag.Title = "ПК";
+}
+
+<h2>ПК</h2>
+
+<p>
+    @Html.ActionLink("Добавить запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <p>Операционная система</p>
+        </th>
+        <th>
+            <p>Клавиатура</p>
+        </th>
+        <th>
+            <p>Мышь</p>
+        </th>
+        <th>
+            <p>Монитор</p>
+        </th>
+
+        <th></th>
+    </tr>
+    @using (Html.BeginForm("Index", "personal_computer", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-10">
+                <label for="query">
+                    <input type="text" name="search" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Поиск" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.software.os)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.keyboard)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.computer_mouse)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.monitor)
+    </td>
+
+    <td>
+        @Html.ActionLink("Изменение", "Edit", new { id = item.id }) |
+        @Html.ActionLink("Подробнее", "Details", new { id = item.id }) |
+        @Html.ActionLink("Удаление", "Delete", new { id = item.id })
+    </td>
+</tr>
+    }
+
+</table>

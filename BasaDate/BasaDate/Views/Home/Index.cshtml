@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <div class="jumbotron">
+        <style>
+            .cash {
+                text-shadow: 1px 3px 5px grey;
+                box-shadow: 0 5px 10px -3px black;
+                max-width: 220px;
+                padding: 20px;
+                font-size: 18px;
+                border-radius: 10px;
+                background: white;
+                float: right;
+                margin-top:40px;
+            }  
+        </style>
+        
+        <div class="cash">
+            <p>USD: @ViewData["dollar"]<p>
+            <p>EUR: @ViewData["euro"]<p> 
+        </div>
+       
+        <h1>Добро пожаловать</h1>
+        <p class="lead">Вы можете посмотреть предоставляемые услуги и ознакомится со списком администраторов.</p>
+        <p>Чувствуйте себя как дома!</p>
+        
+        <img class="img-responsive" src="~/Content/photo_2020-05-03_13-22-00.jpg" alt="менты" />
+    </div>
+

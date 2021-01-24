@@ -1,0 +1,40 @@
+﻿@model BasaDate.Models.software
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотите удалить?</h3>
+<div>
+    <h4>ПО</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <p>Операционная система</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.os)
+        </dd>
+
+        <dt>
+            <p>Программы</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.programs)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
+</div>

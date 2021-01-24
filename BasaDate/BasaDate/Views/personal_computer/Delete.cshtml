@@ -1,0 +1,56 @@
+﻿@model BasaDate.Models.personal_computer
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотите удалить?</h3>
+<div>
+    <h4ПК</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <p>Операционная система</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.software.os)
+        </dd>
+
+        <dt>
+            <p>Клавиатура</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.keyboard)
+        </dd>
+
+        <dt>
+            <p>Мышь</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.computer_mouse)
+        </dd>
+
+        <dt>
+            <p>Монитор</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.monitor)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
+</div>

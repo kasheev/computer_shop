@@ -1,0 +1,42 @@
+﻿@model BasaDate.Models.visitor
+
+@{
+    ViewBag.Title = "Подробнее";
+}
+
+    <h2>Подробнее</h2>
+
+<div>
+    <h4>Посетители</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <p>Полное имя</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.full_name)
+        </dd>
+
+        <dt>
+            <p>Дата рождения</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_of_birth)
+        </dd>
+
+        <dt>
+            <p>Номер телефона</p>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone_number)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменение", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>

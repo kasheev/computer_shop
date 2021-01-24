@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BasaDate.Models.admin>
+
+@{
+    ViewBag.Title = "Адмнистраторы";
+}
+
+<h2>Администраторы</h2>
+
+<p>
+    @if (User.IsInRole("admin"))
+    {
+        @Html.ActionLink("Добавить запись", "Create")
+    }
+    </p>
+<table class="table">
+    <tr>
+        <th>
+            <p>Администраторы</p>
+        </th>
+        <th></th>
+    </tr>
+
+     @using (Html.BeginForm("Index", "admins", FormMethod.Post))
+    {
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="query">
+                <input type="text" name="search" class="form-control" />
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Поиск" class="btn btn-default" />
+        </div>
+    </div>
+    }
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.full_name)
+        </td>
+        <td>
+        @if (User.IsInRole("admin")) {
+           @Html.ActionLink("Изменение", "Edit", new { id = item.id })} |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.id }) |
+        @if (User.IsInRole("admin"))
+        {
+            @Html.ActionLink("Удаление", "Delete", new { id = item.id })
+        }
+        </td>
+    </tr>
+}
+
+</table>

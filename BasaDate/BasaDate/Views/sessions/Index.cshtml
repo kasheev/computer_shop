@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BasaDate.Models.session>
+
+@{
+    ViewBag.Title = "Сеансы";
+}
+
+<h2>Сеансы</h2>
+
+<p>
+     @Html.ActionLink("Добавить запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <p>Дата</p>
+        </th>
+        <th>
+            <p>Начало</p>
+        </th>
+        <th>
+            <p>Конец</p>
+        </th>
+        <th>
+            <p>Администратор</p>
+        </th>
+        <th>
+            <p>Номер компьютера</p>
+        </th>
+        <th>
+            <p>Услуга</p>
+        </th>
+        <th>
+            <p>Посетитель</p>
+        </th>
+        <th></th>
+    </tr>
+
+    @using (Html.BeginForm("Index", "sessions", FormMethod.Post))
+    {
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="query">
+                <input type="text" name="search" class="form-control" />
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Поиск" class="btn btn-default" />
+        </div>
+    </div>
+    }
+
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.start_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.end_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.admin.full_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_personal_computer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.service.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.visitor.full_name)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

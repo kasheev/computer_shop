@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f2894fe33e374e958bd5ab7bb5551e9c" Name="Diagram1" ZoomLevel="102" >
+        <EntityTypeShape EntityType="Model1.admin" Width="1.875" PointX="12.125" PointY="3.625" />
+        <EntityTypeShape EntityType="Model1.personal_computer" Width="1.625" PointX="7.5" PointY="1.375" />
+        <EntityTypeShape EntityType="Model1.service" Width="1.5" PointX="6.125" PointY="4" />
+        <EntityTypeShape EntityType="Model1.session" Width="1.5" PointX="9.75" PointY="2.875" />
+        <EntityTypeShape EntityType="Model1.software" Width="1.5" PointX="5.125" PointY="1.75" />
+        <EntityTypeShape EntityType="Model1.visitor" Width="1.5" PointX="11.75" PointY="1.375" />
+        <AssociationConnector Association="Model1.fk_session_admin" />
+        <AssociationConnector Association="Model1.fk_personal_computer_software" />
+        <AssociationConnector Association="Model1.fk_session_personal_computer" />
+        <AssociationConnector Association="Model1.fk_session_services" />
+        <AssociationConnector Association="Model1.fk_session_visitors" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
